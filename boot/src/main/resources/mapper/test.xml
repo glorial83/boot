@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd">
+<mapper namespace="test">
+    <select id="selecttest" parameterType="map" timeout="0" resultType="java.util.LinkedHashMap" useCache="false">
+        SELECT 'test12345' as teststring
+          FROM DUAL
+    </select>
+
+    <select id="EMP_DATE_INSERT" parameterType="map" statementType="CALLABLE">
+        <!-- dml/procedure.sql 참고 -->
+        {
+            call TAKEIT.EMP_DATA_INSERT (
+                 #{dsInput, jdbcType=ARRAY, jdbcTypeName=EMP_LIST, mode=IN, typeHandler=com.glorial.mybatis.ListMapTypeHandler}
+               , #{TEST_ID, mode=IN, jdbcType=VARCHAR}
+               , #{result, mode=OUT, jdbcType=VARCHAR}
+            )
+        }
+    </select>
+</mapper>

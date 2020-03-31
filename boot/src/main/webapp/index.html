@@ -1,0 +1,48 @@
+<html>
+<head>
+    <meta content="text/html;charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>로그인</title>
+    <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/boot/css/style.css"/>
+    <script>
+	    $().ready(function(){
+			$("#dbtest").click(function(e){
+				$.ajax({
+	        		url: "/boot/selecttest",
+	                type: "POST",
+	                dataType: "json",
+	                contentType: "application/json",
+	                async: false,
+	                success: function (data) {
+	                	$("#errMsg").text(data[0].TESTSTRING);
+	                }
+	            });
+	    	});
+	    });
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="form row">
+		<div class="form-horizontal col-md-offset-3" id="test_form">
+			<h3 class="form-title">서버세팅 테스트용</h3>
+			<div class="form-group">
+				<div class="col-md-9">
+					<div class="form-group col-md-offset-9">
+						<button type="submit" class="btn btn-success pull-center" name="dbtest" id="dbtest">DB서버테스트</button>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+                <span class="errMsg" id="errMsg"></span>
+            </div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

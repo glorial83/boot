@@ -1,0 +1,97 @@
+server:
+  servlet:
+    context-path : /boot
+
+---
+spring:
+  http:
+    encoding:
+      charset: utf-8
+      enabled: true
+      force: true
+  profiles:
+    active: local
+      
+---
+spring:
+  profiles: local, development
+  datasource:
+    hikari:
+      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+      #jdbc-url: jdbc:log4jdbc:oracle:thin:@172.17.1.210:1521:HAEDUK
+      jdbc-url: jdbc:log4jdbc:oracle:thin:@13.125.93.19:1521:XE
+      pool-name: hikari-cp
+      minimum-idle: 2
+      maximum-pool-size: 5
+      username: sguide
+      password: take0801
+  devtools:
+    livereload:
+      enabled: false   #livereload 사용시 활성화
+    restart:
+      enabled: true    #운영 에서는 제거.
+      
+---
+spring:
+  profiles: prod
+  datasource:
+    hikari:
+      driver-class-name: oracle.jdbc.driver.OracleDriver
+      jdbc-url: jdbc:oracle:thin:@172.17.1.210:1521:HAEDUK
+      pool-name: hikari-cp
+      minimum-idle: 2
+      maximum-pool-size: 5
+      username: LNS
+      password: LNS
+      
+---
+#spring security (Using generated security password: 8e105751-543b-46e1-91d8-a7257864c7f2)
+spring:
+  security:
+    user:
+      name: glorial
+      password: glorial
+      
+---
+#spring security 관련
+server:
+  servlet:
+    session:
+      cookie:
+        http-only: true
+      tracking-modes: cookie
+
+---
+security:
+  url: 
+    login: /login
+    logout: /logout
+    mypage: /mypage
+    accessdenied: /error/accessdenied
+    refreshToken: /api/token
+  token:
+    issuer: security
+    expired: 1
+    refreshExpired: 60
+    signing-key: securityKey
+    
+---
+logging:
+  config: classpath:logback.xml 
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.web: ERROR
+    org.springframework.jdbc: ERROR
+    org: ERROR
+    #io: ERROR
+    com.zaxxer.hikari: ERROR
+    reactor.netty: ERROR
+    jdbc: OFF
+
+    
+#---
+#redis
+#spring:
+#  redis:
+#    host: localhost
+#    port: 6379
